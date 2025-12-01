@@ -1,11 +1,4 @@
-# HogBridge
-
- _   _            ____       _      _      
-| | | | ___  ___ | __ ) _ __(_) ___| |__   
-| |_| |/ _ \/ _ \|  _ \| '__| |/ __| '_ \  
-|  _  |  __/ (_) | |_) | |  | | (__| | | |
-|_| |_|\___|\___/|____/|_|  |_|\___|_| |_|
-H O G B R I D G E
+# 🚀 HogBridge
 
 HogBridge is a production-grade mock Mailgun API written in Go.
 The service accepts Mailgun-style requests (`/v3/:domain/messages`), validates the payload, automatically selects an
