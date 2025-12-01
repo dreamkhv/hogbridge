@@ -1,6 +1,7 @@
 package mailer
 
 import (
+	"hog-bridge/internal/enum"
 	"hog-bridge/internal/factory"
 	"hog-bridge/internal/request"
 
@@ -30,8 +31,8 @@ func NewMailer(host string, port int, username, password string) (*Mailer, error
 	}, nil
 }
 
-func (m *Mailer) Send(req request.MailgunRequest) error {
-	msg, err := m.factory.NewMailgun(req)
+func (m *Mailer) Send(req request.MessageRequest) error {
+	msg, err := m.factory.New(enum.Mailgun, req)
 	if err != nil {
 		return err
 	}

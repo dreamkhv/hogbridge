@@ -22,23 +22,20 @@ func NewMailgunHandler(mailer *mailer.Mailer) *MailgunHandler {
 }
 
 func (h *MailgunHandler) Handle(c *gin.Context) {
-	var req request.MailgunRequest
+	var req request.MailgunMessageRequest
 
 	if err := c.ShouldBind(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
 		return
 	}
 
 	if err := h.validator.Struct(req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
 		return
 	}
 
 	if err := h.mailer.Send(req); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-
 		return
 	}
 

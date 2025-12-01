@@ -2,7 +2,9 @@ package request
 
 import "mime/multipart"
 
-type MailgunRequest struct {
+type MessageRequest interface{}
+
+type MailgunMessageRequest struct {
 	From       string                `form:"from" validate:"required,email"`
 	To         string                `form:"to" validate:"required,email"`
 	Subject    string                `form:"subject" validate:"required"`

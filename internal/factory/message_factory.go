@@ -1,6 +1,8 @@
 package factory
 
 import (
+	"errors"
+	"hog-bridge/internal/enum"
 	"hog-bridge/internal/request"
 
 	"github.com/wneessen/go-mail"
@@ -8,7 +10,17 @@ import (
 
 type MessageFactory struct{}
 
-func (f *MessageFactory) NewMailgun(req request.MailgunRequest) (*mail.Msg, error) {
+func (f *MessageFactory) New(mailType enum.MailType, req request.MessageRequest) (*mail.Msg, error) {
+	switch mailType {
+	case enum.Mailgun:
+		r, _ := req.(request.MailgunMessageRequest)
+		return f.NewMailgun(r)
+	default:
+		return nil, errors.New("unknown mail type")
+	}
+}
+
+func (f *MessageFactory) NewMailgun(req request.MailgunMessageRequest) (*mail.Msg, error) {
 	msg := mail.NewMsg()
 
 	if err := msg.From(req.From); err != nil {
