@@ -8,7 +8,7 @@ email formation strategy, and sends the email to MailHog via SMTP.
 
 ### Installation
 
-```bash
+```shell
 git clone https://github.com/dreamkhv/hogbridge
 cd hogbridge
 go mod tidy
@@ -22,6 +22,12 @@ go install github.com/air-verse/air@latest # install air for hot-reload
 make debug # hot-reload launch via air
 make run   # production laucnh via docker
 make down  # stop and remove all containers
+```
+
+### Production
+
+```shell
+docker run --rm --name hogbridge -p 8025:8025 -p 1025:1025 -p 8080:8080 dreamkhv/hogbridge
 ```
 
 ### Example request
