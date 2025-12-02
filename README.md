@@ -21,7 +21,7 @@ go install github.com/air-verse/air@latest # install air for hot-reload
 
 ```shell
 make debug # hot-reload launch via air
-make run   # production laucnh via docker
+make run   # production launch via docker
 make down  # stop and remove all containers
 ```
 
