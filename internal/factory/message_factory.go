@@ -44,7 +44,7 @@ func (f *MessageFactory) NewMailgun(req request.MailgunMessageRequest) (*mail.Ms
 		if err != nil {
 			return nil, err
 		}
-		defer file.Close()
+		defer func() { _ = file.Close() }()
 
 		err = msg.AttachReader(req.Attachment.Filename, file)
 		if err != nil {

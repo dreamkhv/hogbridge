@@ -12,6 +12,9 @@ down:
 compose:
 	cd docker && docker compose up -d
 
+lint:
+	golangci-lint run
+
 publish:
 	docker build -t dreamkhv/hogbridge -f docker/Dockerfile . && \
 	docker push dreamkhv/hogbridge
