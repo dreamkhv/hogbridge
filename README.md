@@ -1,6 +1,6 @@
 # 🚀 HogBridge
 
-### HogBridge is a production-grade mock Mailgun API written in Go.
+### HogBridge is a production-grade mock Mailgun API written in Go
 
 ![hogbridge.png](hogbridge.png)
 
