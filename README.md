@@ -2,7 +2,7 @@
 
 ### HogBridge is a production-grade mock Mailgun API written in Go
 
-![hogbridge.png](hogbridge.png)
+<img src="hogbridge.png" alt="hogbridge" width="256"/>
 
 The service accepts Mailgun-style requests (`/v3/:domain/messages`), validates the payload, automatically selects an
 email formation strategy, and sends the email to MailHog via SMTP.
