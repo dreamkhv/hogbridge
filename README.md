@@ -30,6 +30,14 @@ make down  # stop and remove all containers
 docker run --rm --name hogbridge -p 8025:8025 -p 1025:1025 -p 8080:8080 dreamkhv/hogbridge
 ```
 
+```shell
+SERVER_PORT: ':8080'
+MAIL_HOST: localhost
+MAIL_PORT: 1025
+MAIL_USERNAME: null
+MAIL_PASSWORD: null
+```
+
 ### Example request
 
 ```shell
