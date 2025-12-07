@@ -9,13 +9,19 @@ COPY . .
 
 RUN go build -o HogBridge ./cmd/app/main.go
 
-FROM --platform=linux/amd64  alpine:3.21
+RUN apk --no-cache add --virtual build-dependencies \
+    git \
+  && mkdir -p /root/gocode \
+  && export GOPATH=/root/gocode \
+  && go install github.com/mailhog/MailHog@latest
+
+FROM alpine:3.21
 
 ENV GIN_MODE=release
 
 RUN apk add --no-cache supervisor
 
-COPY --from=mailhog/mailhog:latest /usr/local/bin/MailHog /usr/local/bin/MailHog
+COPY --from=builder /root/gocode/bin/MailHog /usr/local/bin/MailHog
 COPY --from=builder /app/HogBridge /usr/local/bin/HogBridge
 
 COPY docker/supervisord.conf /etc/supervisord.conf
