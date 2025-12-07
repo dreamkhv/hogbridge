@@ -9,6 +9,9 @@ run: down
 down:
 	docker stop hogbridge hogbridge-mailhog || true
 
+compose:
+	cd docker && docker compose up -d
+
 publish:
 	docker build -t dreamkhv/hogbridge -f docker/Dockerfile . && \
 	docker push dreamkhv/hogbridge
