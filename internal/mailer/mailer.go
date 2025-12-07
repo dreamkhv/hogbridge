@@ -1,16 +1,11 @@
 package mailer
 
 import (
-	"hog-bridge/internal/enum"
-	"hog-bridge/internal/factory"
-	"hog-bridge/internal/request"
-
 	"github.com/wneessen/go-mail"
 )
 
 type Mailer struct {
-	client  *mail.Client
-	factory *factory.MessageFactory
+	client *mail.Client
 }
 
 func NewMailer(host string, port int, username, password string) (*Mailer, error) {
@@ -25,18 +20,10 @@ func NewMailer(host string, port int, username, password string) (*Mailer, error
 		return nil, err
 	}
 
-	return &Mailer{
-		client:  client,
-		factory: &factory.MessageFactory{},
-	}, nil
+	return &Mailer{client: client}, nil
 }
 
-func (m *Mailer) Send(req request.MessageRequest) error {
-	msg, err := m.factory.New(enum.Mailgun, req)
-	if err != nil {
-		return err
-	}
-
+func (m *Mailer) Send(msg *mail.Msg) error {
 	if err := m.client.DialAndSend(msg); err != nil {
 		return err
 	}

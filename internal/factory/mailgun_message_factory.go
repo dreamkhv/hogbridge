@@ -1,26 +1,15 @@
 package factory
 
 import (
-	"errors"
-	"hog-bridge/internal/enum"
 	"hog-bridge/internal/request"
 
 	"github.com/wneessen/go-mail"
 )
 
-type MessageFactory struct{}
+type MailgunMessageFactory struct{}
 
-func (f *MessageFactory) New(mailType enum.MailType, req request.MessageRequest) (*mail.Msg, error) {
-	switch mailType {
-	case enum.Mailgun:
-		r, _ := req.(request.MailgunMessageRequest)
-		return f.NewMailgun(r)
-	default:
-		return nil, errors.New("unknown mail type")
-	}
-}
-
-func (f *MessageFactory) NewMailgun(req request.MailgunMessageRequest) (*mail.Msg, error) {
+func (f *MailgunMessageFactory) New(r request.MessageInterface) (*mail.Msg, error) {
+	req := r.(request.MailgunMessage)
 	msg := mail.NewMsg()
 
 	if err := msg.From(req.From); err != nil {
@@ -44,7 +33,7 @@ func (f *MessageFactory) NewMailgun(req request.MailgunMessageRequest) (*mail.Ms
 		if err != nil {
 			return nil, err
 		}
-		defer file.Close()
+		defer func() { _ = file.Close() }()
 
 		err = msg.AttachReader(req.Attachment.Filename, file)
 		if err != nil {

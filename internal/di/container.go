@@ -4,9 +4,15 @@ import (
 	"hog-bridge/internal/config"
 	"hog-bridge/internal/handler"
 	"hog-bridge/internal/mailer"
+	"hog-bridge/internal/request"
 )
 
-func Initialize(cfg config.Config) (*handler.MailgunHandler, error) {
+type Container struct {
+	MailgunHandler   *handler.MailHandler[request.MailgunMessage]
+	MailchimpHandler *handler.MailHandler[request.SendgridMessage]
+}
+
+func Initialize(cfg config.Config) (*Container, error) {
 	m, err := mailer.NewMailer(
 		cfg.MailHost,
 		cfg.MailPort,
@@ -18,5 +24,8 @@ func Initialize(cfg config.Config) (*handler.MailgunHandler, error) {
 		return nil, err
 	}
 
-	return handler.NewMailgunHandler(m), nil
+	return &Container{
+		MailgunHandler:   handler.NewMailgunHandler(m),
+		MailchimpHandler: handler.NewSendgridHandler(m),
+	}, nil
 }
